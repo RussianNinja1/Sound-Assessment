@@ -1,11 +1,16 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
+using UnityEngine.UI;
+using System.Data;
 
 public class DialogueManager : MonoBehaviour
 {
     public GameObject dialogueBox;
     public TMP_Text dialogueText;
 
+    [SerializeField] private float typingSpeed = 0.04f;
+    private Coroutine displayLineCoroutine;
     public bool DialogActive;
 
     public string[] dialogueLines;
@@ -35,9 +40,26 @@ public class DialogueManager : MonoBehaviour
             currentLine = 0;
             ThePlayer.playerCanMove = true;
         }
-        dialogueText.text = dialogueLines[currentLine];
+        if (displayLineCoroutine != null)
+        {
+            StopCoroutine(displayLineCoroutine);
+        }
+        displayLineCoroutine = StartCoroutine(DisplayLine(dialogueLines[currentLine]));
+        //dialogueText.text = dialogueLines[currentLine];
 
     }
+    private IEnumerator DisplayLine(string line)
+    {
+        // empty dialogue text
+        dialogueText.text = "";
+        foreach(char letter in line.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+
+        }
+    }
+
     public void ShowBox(string dialogue)
     {
         DialogActive = true;
