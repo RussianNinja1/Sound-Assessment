@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DialogueHolder : MonoBehaviour
 {
-    public string dialogue;
+    
     private DialogueManager dMan;
     public string[] dialogueLines;
     private BoxCollider colid;

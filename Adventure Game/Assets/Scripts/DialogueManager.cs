@@ -12,15 +12,24 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private float typingSpeed = 0.04f;
     private Coroutine displayLineCoroutine;
     public bool DialogActive;
-
+   
     public string[] dialogueLines;
     public int currentLine;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip dialogueTypingSoundClip;
+    [SerializeField] private bool StopAudioSource;
+
+
+    private AudioSource audioSource;
 
     private FirstPersonController ThePlayer;
     // Start is called before the first frame update
     void Start()
     {
         ThePlayer = FindObjectOfType<FirstPersonController>();
+
+        audioSource = this.gameObject.AddComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -30,8 +39,18 @@ public class DialogueManager : MonoBehaviour
         {
             //dialogueBox.SetActive(false);
             //DialogActive = false;
+            
             currentLine++;
+
+            if (displayLineCoroutine != null)
+            {
+                StopCoroutine(displayLineCoroutine);
+            }
+            string nextline = dialogueLines[currentLine];
+         displayLineCoroutine = StartCoroutine(DisplayLine(nextline));
+            //dialogueText.text = dialogueLines[currentLine];
         }
+
         if (currentLine >= dialogueLines.Length)
         {
             dialogueBox.SetActive(false);
@@ -40,21 +59,22 @@ public class DialogueManager : MonoBehaviour
             currentLine = 0;
             ThePlayer.playerCanMove = true;
         }
-        if (displayLineCoroutine != null)
-        {
-            StopCoroutine(displayLineCoroutine);
-        }
-        displayLineCoroutine = StartCoroutine(DisplayLine(dialogueLines[currentLine]));
-        //dialogueText.text = dialogueLines[currentLine];
-
+        
+        
     }
     private IEnumerator DisplayLine(string line)
     {
         // empty dialogue text
-        dialogueText.text = "";
+        dialogueText.text = line;
+        dialogueText.maxVisibleCharacters = 0;
         foreach(char letter in line.ToCharArray())
         {
-            dialogueText.text += letter;
+            dialogueText.maxVisibleCharacters++;
+            if (StopAudioSource)
+            {
+                audioSource.Stop();
+            }
+            audioSource.PlayOneShot(dialogueTypingSoundClip);
             yield return new WaitForSeconds(typingSpeed);
 
         }
