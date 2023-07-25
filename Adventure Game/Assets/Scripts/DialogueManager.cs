@@ -17,9 +17,14 @@ public class DialogueManager : MonoBehaviour
     public int currentLine;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip dialogueTypingSoundClip;
+    [SerializeField] private AudioClip[] dialogueTypingSoundClips;
     [SerializeField] private bool StopAudioSource;
-
+    [Range(1,5)]
+    [SerializeField] private int frequencyLevel = 2;
+    [Range(-3, 3)]
+    [SerializeField] private float minPitch = 0.5f;
+    [Range(-3, 3)]
+    [SerializeField] private float maxPitch = 3f;
 
     private AudioSource audioSource;
 
@@ -67,16 +72,32 @@ public class DialogueManager : MonoBehaviour
         // empty dialogue text
         dialogueText.text = line;
         dialogueText.maxVisibleCharacters = 0;
+
+        //typing effect
         foreach(char letter in line.ToCharArray())
         {
+            PlayDialogueSound(dialogueText.maxVisibleCharacters);
             dialogueText.maxVisibleCharacters++;
+            yield return new WaitForSeconds(typingSpeed);
+
+        }
+    }
+
+    private void PlayDialogueSound (int currentDisplayedCharacterCount)
+    {
+        if(currentDisplayedCharacterCount % frequencyLevel == 0)
+        {
             if (StopAudioSource)
             {
                 audioSource.Stop();
             }
-            audioSource.PlayOneShot(dialogueTypingSoundClip);
-            yield return new WaitForSeconds(typingSpeed);
-
+            //sound clip
+            int randomIndex = Random.Range(0, dialogueTypingSoundClips.Length);
+            AudioClip soundClip = dialogueTypingSoundClips[randomIndex];
+            //pitch
+            audioSource.pitch = Random.Range(minPitch, maxPitch);
+            //play sound
+            audioSource.PlayOneShot(soundClip);
         }
     }
 
