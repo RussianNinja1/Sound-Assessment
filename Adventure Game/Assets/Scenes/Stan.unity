@@ -7059,9 +7059,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueBox: {fileID: 1826135582}
   dialogueText: {fileID: 1373686109}
+  typingSpeed: 0.04
   DialogActive: 0
   dialogueLines: []
   currentLine: 0
+  dialogueTypingSoundClips:
+  - {fileID: 8300000, guid: 68ef9e970747e574fa8e9fd84675b630, type: 3}
+  - {fileID: 8300000, guid: 0deb01780a20b8f4fbfc8d07619d4828, type: 3}
+  - {fileID: 8300000, guid: b937f3aaeb10b6742bf80a3141798b88, type: 3}
+  StopAudioSource: 0
+  frequencyLevel: 3
+  minPitch: 1
+  maxPitch: 1.5
 --- !u!4 &1086587222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4680757731159730826, guid: 0fde05fa0f3321942a21896ff4f0856f, type: 3}
@@ -9254,7 +9263,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: dialogue
+  m_text: Oh!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11103,8 +11112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 590053458f9ca564595b0d6c3a2b0348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: 
   dialogueLines:
+  - 
   - Hey Dear
   - Lovely to see you as always
   - Could you please go find my cat
