@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Android.Types;
 using UnityEngine;
 
 public class SoundTrigger : MonoBehaviour
@@ -20,6 +21,11 @@ public class SoundTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        StartCoroutine(Sound());
+        if (collider.tag == "Player")
+        {
+          StartCoroutine(Sound());
+        }
+
+        
     }
 }
