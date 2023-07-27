@@ -8,11 +8,14 @@ public class CatTrigger : MonoBehaviour
     public GameObject Prefab;
     public GameObject Cat;
    
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider collider)
     {
-        //Use in scene Lost cat not the prefab
-        Instantiate(Cat, Spawnpoint.position, Spawnpoint.rotation);
-        Destroy(Cat);
-        Destroy(Prefab);
+        if (collider.tag == ("pickup"))
+            {
+            //Use in scene Lost cat not the prefab
+            Instantiate(Cat, Spawnpoint.position, Spawnpoint.rotation);
+            Destroy(Cat);
+            Destroy(Prefab);
+        }
     }
 }
