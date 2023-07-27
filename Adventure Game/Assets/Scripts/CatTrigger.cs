@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CatTrigger : MonoBehaviour
 {
     public Transform Spawnpoint;
-    public GameObject Prefab;
     public GameObject Cat;
    
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
-        //Use in scene Lost cat not the prefab
-        Instantiate(Cat, Spawnpoint.position, Spawnpoint.rotation);
-        Destroy(Cat);
-        Destroy(Prefab);
+        if(other.gameObject.tag == "pickup")
+        {
+            Instantiate(Cat, Spawnpoint.position, Spawnpoint.rotation);
+
+            Destroy(other.gameObject);
+        }
     }
 }
