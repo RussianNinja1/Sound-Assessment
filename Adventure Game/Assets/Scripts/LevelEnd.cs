@@ -9,6 +9,7 @@ public class LevelEnd : MonoBehaviour
     private IEnumerator EndLevel()
     {
         yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(Finish);
     }
     void OnTriggerEnter(Collider other)
     {
@@ -16,7 +17,6 @@ public class LevelEnd : MonoBehaviour
         if (other.CompareTag("pickup"))
         {
             StartCoroutine(EndLevel());
-            SceneManager.LoadScene(Finish);
         }
     }
 }
