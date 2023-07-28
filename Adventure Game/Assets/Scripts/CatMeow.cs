@@ -11,8 +11,10 @@ public class CatMeow : MonoBehaviour
     [SerializeField] private float minPitch = 0.5f;
     [Range(-3, 3)]
     [SerializeField] private float maxPitch = 3f;
+    [Range(10, 30)]
+    [SerializeField] private float Intervals = 10f;
 
-    public AudioSource audioSourceCat;
+   public AudioSource audioSourceCat;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,7 @@ public class CatMeow : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            InvokeRepeating("PlayMeowSound", 1.0f, 10.0f);
+            InvokeRepeating("PlayMeowSound", 1.0f, Intervals);
         }
     }
     private void PlayMeowSound()
